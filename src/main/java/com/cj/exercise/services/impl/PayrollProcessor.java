@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class PayrollProcessorStrategy<T> implements ProviderMemberPayrollStrategy<T> {
+public class PayrollProcessor<T> implements ProviderMemberPayrollStrategy<T> {
 
 
     /**

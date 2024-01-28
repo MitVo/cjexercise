@@ -3,7 +3,7 @@ package com.cj.exercise.strategies.impl;
 import com.cj.exercise.constants.CJMessages;
 import com.cj.exercise.entities.Employee;
 import com.cj.exercise.exceptions.CJExceptions;
-import com.cj.exercise.services.impl.PayrollProcessorStrategy;
+import com.cj.exercise.services.impl.PayrollProcessor;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PayrollProcessorTest {
 
-    PayrollProcessorStrategy<Employee> employeePayrollProcessor = new PayrollProcessorStrategy<>();
+    PayrollProcessor<Employee> employeePayrollProcessor = new PayrollProcessor<>();
 
     @Test
     public void givenListEmployees_thenReturnTotalPayroll() throws CJExceptions {

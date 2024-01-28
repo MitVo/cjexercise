@@ -9,8 +9,8 @@ which contains:
  - [Employee](src/main/java/com/cj/exercise/entities/Employee.java)
 
 ### Logic 
- - [ProviderMemberPayrollStrategy](src/main/java/com/cj/exercise/strategies/ProviderMemberPayrollStrategy.java)
- - [PayrollProcessor](src/main/java/com/cj/exercise/strategies/impl/PayrollProcessor.java)
+ - [ProviderMemberPayrollStrategy](src/main/java/com/cj/exercise/services/ProviderMemberPayrollStrategy.java)
+ - [PayrollProcessor](src/main/java/com/cj/exercise/services/impl/PayrollProcessor.java)
 
 ### Custom Exceptions & Others
  - [CJExceptions](src/main/java/com/cj/exercise/exceptions/CJExceptions.java)
@@ -22,7 +22,7 @@ which contains:
  - JUnit
  - Java 17
 
-* This project includes 3 simple unit tests regarding the requirement of the exercise.
+* This project includes 4 simple unit tests regarding the requirement of the exercise.
 
 
 # How to?
