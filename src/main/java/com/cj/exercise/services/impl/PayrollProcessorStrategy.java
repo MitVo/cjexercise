@@ -3,7 +3,7 @@ package com.cj.exercise.services.impl;
 import com.cj.exercise.constants.CJMessages;
 import com.cj.exercise.entities.Employee;
 import com.cj.exercise.exceptions.CJExceptions;
-import com.cj.exercise.services.ProviderMemberPayroll;
+import com.cj.exercise.services.ProviderMemberPayrollStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class PayrollProcessor<T> extends ProviderMemberPayroll<T> {
+public class PayrollProcessorStrategy<T> implements ProviderMemberPayrollStrategy<T> {
 
 
     /**
@@ -25,10 +25,11 @@ public class PayrollProcessor<T> extends ProviderMemberPayroll<T> {
                 .map(Employee::monthlyAmount)
                 .mapToLong(Float::longValue).sum();
 
-        if (Math.signum((float) totalAmount) >= 0) {
-            return totalAmount;
+        if (Math.signum((float) totalAmount) <= 0) {
+            throw new CJExceptions(CJMessages.MSG_NEGATIVE_TOTAL_AMOUNT);
         }
-        throw new CJExceptions(CJMessages.MSG_NEGATIVE_TOTAL_AMOUNT);
+
+        return totalAmount;
     }
 
     /**
@@ -57,7 +58,7 @@ public class PayrollProcessor<T> extends ProviderMemberPayroll<T> {
     }
 
     @Override
-    protected Set<T> getMembersByType(T t) {
+    public Set<T> getMembersByType(T t) {
         return null;
     }
 }
