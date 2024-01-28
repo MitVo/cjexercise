@@ -3,17 +3,27 @@ package com.cj.exercise.strategies.impl;
 import com.cj.exercise.constants.CJMessages;
 import com.cj.exercise.entities.Employee;
 import com.cj.exercise.exceptions.CJExceptions;
+import com.cj.exercise.services.impl.PayrollProcessor;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PayrollProcessorTest {
 
     PayrollProcessor<Employee> employeePayrollProcessor = new PayrollProcessor<>();
+
+    @Test
+    public void givenListEmployees_thenReturnTotalPayroll() throws CJExceptions {
+        Long total = getSetEmployeeValidAmount().stream()
+                .map(Employee::monthlyAmount)
+                .mapToLong(Float::longValue)
+                .sum();
+        assertEquals(total, employeePayrollProcessor.getTotalAmountPayrollByEmployees(getSetEmployeeValidAmount()));
+    }
 
     @Test
     public void givenListEmployees_whenAmountIsNegative_thenReturnMessage() {
@@ -40,12 +50,22 @@ public class PayrollProcessorTest {
         assertThrows(
                 CJExceptions.class,
                 ()-> employeePayrollProcessor.getTotalAmountPayrollByEmployees(Collections.singleton(employeeEmptyName)),
-                "Name of employee is null");
+                CJMessages.MSG_NOT_VALID_EMPLOYEE_NAME);
     }
 
     private Set<Employee> getSetEmployeeNegativeAmount(){
         Employee employee1 = new Employee(1,"Daniel Black",-100F,true);
         Employee employee2 = new Employee(2,"Rick Ness",-200F,true);
+
+        Set<Employee> employeesSet = new HashSet<>();
+        employeesSet.add(employee1);
+        employeesSet.add(employee2);
+        return employeesSet;
+    }
+
+    private Set<Employee> getSetEmployeeValidAmount(){
+        Employee employee1 = new Employee(1,"Daniel Black",150F,true);
+        Employee employee2 = new Employee(2,"Rick Ness",400F,true);
 
         Set<Employee> employeesSet = new HashSet<>();
         employeesSet.add(employee1);
