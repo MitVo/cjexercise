@@ -9,7 +9,7 @@ which contains:
  - [Employee](src/main/java/com/cj/exercise/entities/Employee.java)
 
 ### Logic 
- - [ProviderMemberPayrollStrategy](src/main/java/com/cj/exercise/services/ProviderMemberPayrollStrategy.java)
+ - [ProviderMemberPayroll](src/main/java/com/cj/exercise/services/ProviderMemberPayroll.java)
  - [PayrollProcessor](src/main/java/com/cj/exercise/services/impl/PayrollProcessor.java)
 
 ### Custom Exceptions & Others
@@ -21,6 +21,7 @@ which contains:
  - Gradle(Kotlin)
  - JUnit
  - Java 17
+ - Mockito
 
 * This project includes 4 simple unit tests regarding the requirement of the exercise.
 

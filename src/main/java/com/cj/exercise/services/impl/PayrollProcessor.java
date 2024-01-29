@@ -3,7 +3,7 @@ package com.cj.exercise.services.impl;
 import com.cj.exercise.constants.CJMessages;
 import com.cj.exercise.entities.Employee;
 import com.cj.exercise.exceptions.CJExceptions;
-import com.cj.exercise.services.ProviderMemberPayrollStrategy;
+import com.cj.exercise.services.ProviderMemberPayroll;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,15 +12,24 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class PayrollProcessor<T> implements ProviderMemberPayrollStrategy<T> {
+public class PayrollProcessor {
 
+    private final ProviderMemberPayroll providerMemberPayroll;
+
+    public PayrollProcessor(ProviderMemberPayroll providerMemberPayroll) {
+        this.providerMemberPayroll =  providerMemberPayroll;
+    }
 
     /**
      * Get the total payments by the List of active employees with the correct data
-     *
-     * @return total amount
+     * @return
+     * @throws CJExceptions
      */
-    public Long getTotalAmountPayrollByEmployees(Set<Employee> employees) throws CJExceptions {
+    public Long processPayrollEmployees() throws CJExceptions {
+        return this.getTotalAmountPayrollByEmployees(providerMemberPayroll.getEmployees());
+    }
+
+    private Long getTotalAmountPayrollByEmployees(Set<Employee> employees) throws CJExceptions {
         long totalAmount = this.validatesEmployeesSet(employees).stream()
                 .map(Employee::monthlyAmount)
                 .mapToLong(Float::longValue).sum();
@@ -57,8 +66,4 @@ public class PayrollProcessor<T> implements ProviderMemberPayrollStrategy<T> {
                 .filter(filterActiveEmployee).collect(Collectors.toSet());
     }
 
-    @Override
-    public Set<T> getMembersByType(T t) {
-        return null;
-    }
 }
