@@ -4,8 +4,7 @@ import com.cj.exercise.constants.CJMessages;
 import com.cj.exercise.entities.Employee;
 import com.cj.exercise.exceptions.CJExceptions;
 import com.cj.exercise.services.ProviderMemberPayroll;
-import com.cj.exercise.services.impl.PayrollProcessor;
-import com.cj.exercise.services.impl.ProviderMemberPayrollImp;
+import com.cj.exercise.services.impl.PayrollProcessorImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,18 +17,18 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-public class PayrollProcessorTest {
+public class PayrollProcessorImplTest {
 
     @InjectMocks
-    private PayrollProcessor employeePayrollProcessor;
+    private PayrollProcessorImpl employeePayrollProcessorImpl;
 
     @Mock
     private ProviderMemberPayroll providerMemberPayroll;
 
     @BeforeEach
     public void setUp(){
-        providerMemberPayroll = org.mockito.Mockito.mock(ProviderMemberPayrollImp.class);
-        employeePayrollProcessor = new PayrollProcessor(providerMemberPayroll);
+        providerMemberPayroll = org.mockito.Mockito.mock(ProviderMemberPayroll.class);
+        employeePayrollProcessorImpl = new PayrollProcessorImpl(providerMemberPayroll);
     }
 
 
@@ -41,7 +40,7 @@ public class PayrollProcessorTest {
                 .mapToLong(Float::longValue)
                 .sum();
         when(providerMemberPayroll.getEmployees()).thenReturn(getSetEmployeeValidAmount());
-        assertEquals(total, employeePayrollProcessor.processPayrollEmployees());
+        assertEquals(total, employeePayrollProcessorImpl.processPayrollEmployees());
     }
 
     @Test
@@ -49,7 +48,7 @@ public class PayrollProcessorTest {
         when(providerMemberPayroll.getEmployees()).thenReturn(getSetEmployeeNegativeAmount());
         assertThrows(
                 CJExceptions.class,
-                ()-> employeePayrollProcessor.processPayrollEmployees(),
+                ()-> employeePayrollProcessorImpl.processPayrollEmployees(),
                 CJMessages.MSG_NEGATIVE_TOTAL_AMOUNT);
 
     }
@@ -60,7 +59,7 @@ public class PayrollProcessorTest {
         when(providerMemberPayroll.getEmployees()).thenReturn(Collections.singleton(employeeIdZero));
         assertThrows(
                 CJExceptions.class,
-                ()-> employeePayrollProcessor.processPayrollEmployees(),
+                ()-> employeePayrollProcessorImpl.processPayrollEmployees(),
                 CJMessages.MSG_NOT_VALID_EMPLOYEE_ID);
     }
 
@@ -70,7 +69,7 @@ public class PayrollProcessorTest {
         when(providerMemberPayroll.getEmployees()).thenReturn(Collections.singleton(employeeEmptyName));
         assertThrows(
                 CJExceptions.class,
-                ()-> employeePayrollProcessor.processPayrollEmployees(),
+                ()-> employeePayrollProcessorImpl.processPayrollEmployees(),
                 CJMessages.MSG_NOT_VALID_EMPLOYEE_NAME);
     }
 
